@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilt Effect Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div id="tilt-card" class="bg-white rounded-xl shadow-lg p-6 w-64 h-80 transition-transform duration-300 ease-out">
+        <h2 class="text-2xl font-bold mb-4">Tilt Card</h2>
+        <p class="text-gray-600">Hover over this card to see the tilt effect in action!</p>
+    </div>
+
+    <script>
+        const card = document.getElementById('tilt-card');
+        const maxTilt = 15; // Maximum tilt angle in degrees
+
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left; 
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const tiltX = ((y - centerY) / centerY) * maxTilt;
+            const tiltY = ((centerX - x) / centerX) * maxTilt;
+
+            card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.05, 1.05, 1.05)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        });
+    </script>
+</body>
+</html>
